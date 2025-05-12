@@ -16,6 +16,25 @@
                 },
                 "required": ["formula"]
             }
+        },
+        {
+            "name": "get_all_feasible_solns",
+            "description": "Return all feasible solutions (up to max_solutions) that satisfy the given SMT-LIB2 formula.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "formula": {
+                        "type": "string",
+                        "description": "SMT-LIB2 formula to solve"
+                    },
+                    "max_solutions": {
+                        "type": "integer",
+                        "description": "Maximum number of solutions to return (default 100)",
+                        "default": 100
+                    }
+                },
+                "required": ["formula"]
+            }
         }
     ]
 } 

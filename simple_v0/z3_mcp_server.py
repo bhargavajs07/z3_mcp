@@ -1,6 +1,6 @@
 # z3_mcp_server.py
 from fastmcp import FastMCP
-from z3 import Solver, parse_smt2_string, sat, unsat
+from z3 import Solver, parse_smt2_string, sat, unsat, Or
 import os
 
 # Get the directory where this script is located
@@ -26,6 +26,23 @@ def solve(formula: str) -> dict:
         return {"status": "unsat"}
     return {"status": "unknown"}
 
+@mcp.tool()
+def get_all_feasible_solns(formula: str, max_solutions: int = 100) -> dict:
+    """
+    Return all feasible solutions (up to max_solutions) that satisfy the given SMT-LIB2 formula.
+    """
+    s = Solver()
+    s.add(parse_smt2_string(formula))
+    solutions = []
+    count = 0
+    while s.check() == sat and count < max_solutions:
+        m = s.model()
+        model_dict = {str(d): int(str(m[d])) for d in m.decls()}
+        solutions.append(model_dict)
+        # Add a blocking clause to prevent this solution from appearing again
+        s.add(Or([d() != m[d] for d in m.decls()]))
+        count += 1
+    return {"status": "ok", "num_solutions": len(solutions), "solutions": solutions}
 
 def main():          
     mcp.run() 
