@@ -42,7 +42,8 @@ def get_all_feasible_solns(formula: str, max_solutions: int = 100) -> dict:
         # Add a blocking clause to prevent this solution from appearing again
         s.add(Or([d() != m[d] for d in m.decls()]))
         count += 1
-    return {"status": "ok", "num_solutions": len(solutions), "solutions": solutions}
+    max_reached = count == max_solutions
+    return {"status": "ok", "num_solutions": len(solutions), "max_solutions_used": max_solutions, "max_solutions_reached": max_reached, "solutions": solutions}
 
 def main():          
     mcp.run() 
