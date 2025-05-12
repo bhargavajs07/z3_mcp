@@ -1,0 +1,32 @@
+[project]
+name = "z3-mcp-server"
+version = "0.2.0"
+description = "An MCP server for solving SMT formulas using Z3 and FastMCP."
+authors = [{ name = "GuruGuha" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "z3-solver>=4.12.2",
+  "fastmcp>=2.0",
+  "pydantic>=1.10",  # FastMCP uses Pydantic for type validation
+]
+
+[project.scripts]
+z3-mcp-server = "z3_mcp_server:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F"]
+exclude = ["venv", "__pycache__"]
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true

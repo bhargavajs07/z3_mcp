@@ -1,0 +1,21 @@
+{
+    "name": "z3-mcp-server",
+    "version": "0.2.0",
+    "description": "Z3 SMT Solver MCP Server",
+    "tools": [
+        {
+            "name": "solve",
+            "description": "Solve an SMT-LIB2 formula with Z3",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "formula": {
+                        "type": "string",
+                        "description": "SMT-LIB2 formula to solve"
+                    }
+                },
+                "required": ["formula"]
+            }
+        }
+    ]
+} 
